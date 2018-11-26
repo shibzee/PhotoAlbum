@@ -24,11 +24,11 @@ dotenv.load();
 // Configure Passport to use Auth0
 var strategy = new Auth0Strategy(
   {
-    domain: "-Nu7paWTNLNxPwn-kjP2jC9aX-PlUK37",
-    clientID: "photoalbum.auth0.com",
+    domain: "photoalbum.auth0.com",
+    clientID:"-Nu7paWTNLNxPwn-kjP2jC9aX-PlUK37",
     clientSecret:"bk9w6iQ48x6SSSSZG40Q6seqHOuWhvWjxZCwDG9j7_Tvc-wHCG28CneuYSNoQFWj",
     callbackURL:
-      process.env.AUTH0_CALLBACK_URL || 'http://localhost:3000/callback'
+      process.env.AUTH0_CALLBACK_URL || 'https://sleepy-meadow-27118.herokuapp.com/callback'
   },
   function (accessToken, refreshToken, extraParams, profile, done) {
     // accessToken is the token to call Auth0 API (not needed in the most cases)

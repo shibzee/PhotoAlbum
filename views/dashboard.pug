@@ -1,0 +1,48 @@
+extends lay
+
+block content
+  .container.contact-form
+    .contact-image
+      img(src='https://image.ibb.co/kUagtU/rocket_contact.png', alt='rocket_contact')
+        
+    form(method='post', href="/dashboard", enctype="multipart/form-data")
+        .row
+          .col-md-12
+            h3 My Profile
+          .col-md-6
+            .form-group
+              input.form-control(name='txtName', placeholder='Full Name *', value=fullname, type='text')
+            .form-group
+              input.form-control(name='txtEmail', placeholder='Nickname *', value='', type='text')
+            .form-group
+              input.form-control(name='txtRegno', placeholder='Registration Number *', value='', type='text')
+            .form-group
+              input.form-control(name='txtPhone', placeholder='Phone Number *', value=user.nickname, type='text',readonly="readonly")
+            .form-group
+              input.form-control(name='txtEmail', placeholder='Email Address *', value=user.emails[0].value, type='text',readonly="readonly") 
+            .form-group
+              input.form-control(name='txtAddress', placeholder='Address *', value="", type='text')
+            .form-group
+              input.form-control(name='txtPIC', placeholder='Patner In Crime *', value="", type='text')
+            .form-group
+              input.form-control(name='txtBestQ', placeholder='Best Quote *', value="", type='text')
+            .form-group
+              input.form-control(name='txtCrush', placeholder='Crush *', value="", type='text')
+            .form-group
+              input.form-control(name='txtHobbies', placeholder='Hobbies *', value="", type='text') 
+            .form-group
+              input.form-control(name='txtBirthday', placeholder='Birthday *', value="", type='text')
+          .col-md-5.col-lg-5.col-xl-5.d-flex.justify-content-center(style='margin-left:60px')
+            .form-group
+              .file-field
+                .mb-4
+                  img.rounded-circle.z-depth-1-half.avatar-pic(src=imageUrl, alt='example placeholder avatar')
+                .d-flex.justify-content-center
+                  .btn.btn-mdb-color.btn-rounded.float-left
+                    span Add photo
+                    input(type='file',name="avatarImg")        
+              
+          .col-md-12(style="margin-top:40px")        
+            .form-group
+              input.btnContact(name='btnSubmit', value='Update Profile', type='submit')        
+          

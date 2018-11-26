@@ -1,0 +1,25 @@
+.navbar.navbar-expand-lg.fixed-top.navbar-dark.bg-primary
+  .container
+    a.navbar-brand(href='../') PhotoAlbum
+    button.navbar-toggler(type='button', data-toggle='collapse', data-target='#navbarResponsive', aria-controls='navbarResponsive', aria-expanded='false', aria-label='Toggle navigation')
+      span.navbar-toggler-icon
+    #navbarResponsive.collapse.navbar-collapse
+      ul.nav.navbar-nav
+        - if(!user){
+        li.nav-item
+          a.nav-link(href='/login') Login
+        - }
+        - else{
+        li.nav-item
+          a.nav-link(href='/dashboard') Dashboard
+        - }
+      ul.nav.navbar-nav.ml-auto
+        - if(!user){
+        
+        - }
+        - else{
+        li.nav-item
+          a.nav-link.disabled Hello #{user.nickname}
+        li.nav-item
+          a.nav-link(href='/logout') Logout
+        - }

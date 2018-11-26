@@ -1,0 +1,38 @@
+extends lay
+
+block content
+  header
+  #carouselExampleIndicators.carousel.slide(data-ride='carousel', data-interval='4000')
+    ol.carousel-indicators
+      li.active(data-target='#carouselExampleIndicators', data-slide-to='0')
+      li(data-target='#carouselExampleIndicators', data-slide-to='1')
+      li(data-target='#carouselExampleIndicators', data-slide-to='2')
+    .carousel-inner(role='listbox')
+      // Slide One - Set the background image for this slide in the line below
+      .carousel-item.active(style="background-image: url('/images/rub.jpg')")
+        .carousel-caption.d-none.d-md-block
+          h1(style='font-size:100px') CS/EX Class of 2018 
+          p This is a description for the first slide.
+      // Slide Two - Set the background image for this slide in the line below
+      .carousel-item(style="background-image: url('/images/sub.jpg')")
+        .carousel-caption.d-none.d-md-block
+          h1 Second Slide
+          p This is a description for the second slide.
+      // Slide Three - Set the background image for this slide in the line below
+      .carousel-item(style="background-image: url('http://placehold.it/1900x1080')")
+        .carousel-caption.d-none.d-md-block
+          h3 Third Slide
+          p This is a description for the third slide.
+    a.carousel-control-prev(href='#carouselExampleIndicators', role='button', data-slide='prev')
+      span.carousel-control-prev-icon(aria-hidden='true')
+      span.sr-only Previous
+    a.carousel-control-next(href='#carouselExampleIndicators', role='button', data-slide='next')
+      span.carousel-control-next-icon(aria-hidden='true')
+      span.sr-only Next
+  section.py-5
+    .container
+      h1 Full Slider by Start Bootstrap
+      p
+        | The background images for the slider are set directly in the HTML using inline CSS. The rest of the styles for this template are contained within the
+        code full-slider.css
+        |           file.

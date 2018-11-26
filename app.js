@@ -24,9 +24,9 @@ dotenv.load();
 // Configure Passport to use Auth0
 var strategy = new Auth0Strategy(
   {
-    domain: process.env.AUTH0_DOMAIN,
-    clientID: process.env.AUTH0_CLIENT_ID,
-    clientSecret: process.env.AUTH0_CLIENT_SECRET,
+    domain: "-Nu7paWTNLNxPwn-kjP2jC9aX-PlUK37",
+    clientID: "photoalbum.auth0.com",
+    clientSecret:"bk9w6iQ48x6SSSSZG40Q6seqHOuWhvWjxZCwDG9j7_Tvc-wHCG28CneuYSNoQFWj",
     callbackURL:
       process.env.AUTH0_CALLBACK_URL || 'http://localhost:3000/callback'
   },

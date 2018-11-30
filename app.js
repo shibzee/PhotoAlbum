@@ -28,7 +28,7 @@ var strategy = new Auth0Strategy(
     clientID:"-Nu7paWTNLNxPwn-kjP2jC9aX-PlUK37",
     clientSecret:"bk9w6iQ48x6SSSSZG40Q6seqHOuWhvWjxZCwDG9j7_Tvc-wHCG28CneuYSNoQFWj",
     callbackURL:
-      process.env.AUTH0_CALLBACK_URL || 'http://sleepy-meadow-27118.herokuapp.com/callback'
+      process.env.AUTH0_CALLBACK_URL
   },
   function (accessToken, refreshToken, extraParams, profile, done) {
     // accessToken is the token to call Auth0 API (not needed in the most cases)

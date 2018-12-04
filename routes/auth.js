@@ -20,24 +20,6 @@ router.get('/callback', function (req, res, next) {
       if (err) { return next(err); }
       const returnTo = req.session.returnTo;
       delete req.session.returnTo;
-
-
-
-
-  //   console.log(user.nickname);
-
-
-
-
-      // admin.auth.createCustomToken()
-      //   .then(function(customToken){
-      //
-      //   })
-      //   .catch(function(error){
-      //
-      //   })
-      //
-
       res.redirect('/dashboard');
     });
   })(req, res, next);

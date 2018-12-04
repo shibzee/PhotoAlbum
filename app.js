@@ -69,6 +69,7 @@ app.use(fileParser);
 // app.use(bodyParser.urlencoded({extended: true}));
 app.use(cookieParser());
 
+const isDevelopment = NODE_ENV !== 'production';
 // config express-session
 var sess = {
   store: isDevelopment ? undefined : new RedisStore({client: client}),

@@ -46,7 +46,7 @@ var strategy = new Auth0Strategy(
 );
 
 passport.use(strategy);
-app.use(cors());
+
 // You can use this section to keep a smaller payload
 passport.serializeUser(function (user, done) {
   done(null, user);
@@ -57,7 +57,7 @@ passport.deserializeUser(function (user, done) {
 });
 
 const app = express();
-
+app.use(cors());
 // View engine setup
 app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'pug');

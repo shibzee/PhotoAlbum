@@ -6,6 +6,7 @@ var session = require('express-session');
 var bodyParser=require("body-parser");
 var dotenv = require('dotenv');
 var passport = require('passport');
+var cors= require("cors");
 var Auth0Strategy = require('passport-auth0');
 var flash = require('connect-flash');
 var userInViews = require('./lib/middleware/userInViews');
@@ -15,6 +16,11 @@ var usersRouter = require('./routes/users');
 var dashboardRouter= require("./routes/dashboard");
 // default parser without destructuring
 const fileParser = require('express-multipart-file-parser');
+
+const RedisStore = require('connect-redis')(session);
+
+// Add this line on top of index.js
+var client = require('redis').createClient(process.env.REDISTOGO_URL || REDISTOGO_URL);
 
 
 
@@ -40,7 +46,7 @@ var strategy = new Auth0Strategy(
 );
 
 passport.use(strategy);
-
+app.use(cors());
 // You can use this section to keep a smaller payload
 passport.serializeUser(function (user, done) {
   done(null, user);
@@ -65,6 +71,7 @@ app.use(cookieParser());
 
 // config express-session
 var sess = {
+  store: isDevelopment ? undefined : new RedisStore({client: client}),
   secret: 'CHANGE THIS SECRET',
   cookie: {},
   resave: false,

@@ -72,7 +72,7 @@ app.use(cookieParser());
 //const isDevelopment = NODE_ENV !== 'production';
 // config express-session
 var sess = {
-  store: new RedisStore({url: process.env.REDISTOGO_URL || REDISTOGO_URL}),
+//  store: new RedisStore({url: process.env.REDISTOGO_URL || REDISTOGO_URL}),
   secret: 'CHANGE THIS SECRET',
   cookie: {},
   resave: false,

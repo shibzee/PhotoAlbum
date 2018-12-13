@@ -8,7 +8,7 @@ const async= require('async');
 router.get('/login', passport.authenticate('auth0', {
   scope: 'openid email profile'
 }), function (req, res) {
-  res.redirect('/');
+//  res.redirect('/');
 });
 
 // Perform the final stage of authentication and redirect to previously requested URL or '/user'
@@ -20,25 +20,7 @@ router.get('/callback', function (req, res, next) {
       if (err) { return next(err); }
       const returnTo = req.session.returnTo;
       delete req.session.returnTo;
-
-
-
-
-  //   console.log(user.nickname);
-
-
-
-
-      // admin.auth.createCustomToken()
-      //   .then(function(customToken){
-      //
-      //   })
-      //   .catch(function(error){
-      //
-      //   })
-      //
-
-      res.redirect('/dashboard');
+      res.redirect(returnTo||'/dashboard');
     });
   })(req, res, next);
 });

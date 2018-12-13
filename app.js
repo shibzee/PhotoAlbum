@@ -28,7 +28,7 @@ var strategy = new Auth0Strategy(
     clientID:"-Nu7paWTNLNxPwn-kjP2jC9aX-PlUK37",
     clientSecret:"bk9w6iQ48x6SSSSZG40Q6seqHOuWhvWjxZCwDG9j7_Tvc-wHCG28CneuYSNoQFWj",
     callbackURL:
-      process.env.AUTH0_CALLBACK_URL
+      process.env.AUTH0_CALLBACK_URL||"http://localhost:5000/callback"
   },
   function (accessToken, refreshToken, extraParams, profile, done) {
     // accessToken is the token to call Auth0 API (not needed in the most cases)
@@ -71,8 +71,22 @@ var sess = {
   saveUninitialized: true
 };
 
+
+app.enable('trust proxy');
 if (app.get('env') === 'production') {
   sess.cookie.secure = true; // serve secure cookies, requires https
+// in production on Heroku - re-route everything to https
+//  app.use((req, res, next) => {
+ //  req.header('x-forwarded-proto');
+  //});
+  app.use(function(req, res, next){
+  	if(req.header('x-forwarded-proto') !== 'https'){
+  		res.redirect('https://' + req.header('host') + req.url);
+  	}else{
+  		next();
+  	}
+  });
+
 }
 
 app.use(session(sess));

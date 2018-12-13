@@ -4,17 +4,39 @@ var passport = require('passport');
 const async= require('async');
 //const storage= require("firebase/storage");
 const path= require("path");
+const multer= require("multer");
+const gcsSharp = require('multer-sharp');
+
+
+//am trying to test multer sharp
+// simple resize with custom filename
+const storage = gcsSharp({
+  filename: (req, file, cb) => {
+      cb(null, `${file.fieldname}-newFilename`);
+  },
+  bucket: 'examstudent-8fcf6.appspot.com', // Required : bucket name to upload
+  projectId: 'examstudent-8fcf6', // Required : Google project ID
+  keyFilename: '../config/service-account.json', // Optional : JSON credentials file for Google Cloud Storage
+  acl: 'publicRead', // Optional : acl credentials file for Google Cloud Storage, 'publicrRead' or 'private', default: 'private'
+  size: {
+    width: 200,
+    height: 200
+  },
+  max: true
+});
+const upload = multer({ storage: storage });
 
 const firebase = require("firebase");
 
+
 // Initialize Firebase
 var config = {
-  apiKey: "AIzaSyAxFkDGITrPybaU3PvuJy10UPRUDHo5dms",
-  authDomain: "photoalbum-8b4dc.firebaseapp.com",
-  databaseURL: "https://photoalbum-8b4dc.firebaseio.com",
-  projectId: "photoalbum-8b4dc",
-  storageBucket: "photoalbum-8b4dc.appspot.com",
-  messagingSenderId: "731835108842"
+  apiKey: "AIzaSyBfT5uQ5trlR2tO9fLz8sXuLmJgXXo4aUA",
+    authDomain: "examstudent-8fcf6.firebaseapp.com",
+    databaseURL: "https://examstudent-8fcf6.firebaseio.com",
+    projectId: "examstudent-8fcf6",
+    storageBucket: "examstudent-8fcf6.appspot.com",
+    messagingSenderId: "651513649435"
 };
 firebase.initializeApp(config);
 
@@ -23,10 +45,13 @@ firebase.initializeApp(config);
 const admin= require("firebase-admin");
 
 
+
+
+
 //Configuring google cloud  storageBucket
 
 const keyFilename="../config/service-account.json"; //replace this with api key file
-const projectId = "photoalbum-8b4dc" //replace with your project id
+const projectId = "examstudent-8fcf6" //replace with your project id
 const bucketName = `${projectId}.appspot.com`;
 
 
@@ -35,18 +60,13 @@ const {Storage} = require('@google-cloud/storage');
 
 // Creates a client
 const storage = new Storage({
-  apiKey: "AIzaSyAxFkDGITrPybaU3PvuJy10UPRUDHo5dms",
-  authDomain: "photoalbum-8b4dc.firebaseapp.com",
-  databaseURL: "https://photoalbum-8b4dc.firebaseio.com",
-  projectId: "photoalbum-8b4dc",
-  storageBucket: "photoalbum-8b4dc.appspot.com",
-  messagingSenderId: "731835108842"
+  apiKey: "AIzaSyBfT5uQ5trlR2tO9fLz8sXuLmJgXXo4aUA",
+    authDomain: "examstudent-8fcf6.firebaseapp.com",
+    databaseURL: "https://examstudent-8fcf6.firebaseio.com",
+    projectId: "examstudent-8fcf6",
+    storageBucket: "examstudent-8fcf6.appspot.com",
+    messagingSenderId: "651513649435"
 });
-
-// ({
-//     projectId,
-//     keyFilename
-// });
 
 const bucket = storage.bucket(bucketName);
 
@@ -57,8 +77,8 @@ const serviceAccount = require('../config/service-account.json');
 
 admin.initializeApp({
   credential: admin.credential.cert(serviceAccount),
-  databaseURL: "https://photoalbum-8b4dc.firebaseio.com",
-  storageBucket: "photoalbum-8b4dc.appspot.com"
+    databaseURL: "https://examstudent-8fcf6.firebaseio.com",
+  storageBucket: "examstudent-8fcf6.appspot.com"
 });
 
 
@@ -92,10 +112,6 @@ const ensureAuthenticated =(req,res,next)=>{
 
 
 router.get("/dashboard",secured(), (req,res,next)=>{
-//  console.log(req.user);
-//console.log(firebase);
-// console.log(req.user.nickname);
-// console.log(bucket.storage);
 
 async.waterfall([
 
@@ -173,8 +189,11 @@ console.log(fullname);*/
 
 
 
-router.post("/dashboard",(req,res,next)=>{
+router.post("/dashboard",upload.single('myPic'),(req,res,next)=>{
 
+
+  console.log(req.file); // Print upload details
+    res.send('Successfully uploaded!');
 //  var currentUser=firebase.auth().currentUser.uid;
 
 //var file = $('#poster').get(0).files[0];
@@ -183,12 +202,7 @@ router.post("/dashboard",(req,res,next)=>{
 // console.log(img);
 
 //console.log(req);
-
-
-
-
-
-const file= req.files[0];
+/*const file= req.files[0];
   const {
     fieldname,
     originalname,
@@ -199,18 +213,11 @@ const file= req.files[0];
   var metadata = {
     contentType:  mimetype
   };
-
   // Create a root reference
   console.log(originalname.path);
 console.log(file.path);
-
-
-
-
 const fileName= "super.jpg";
-
 const fileUpload= bucket.file(fileName)
-
 const uploadStream= fileUpload.createWriteStream({
   metadata:{contentType:mimetype,cacheControl: 'no-cache'}
 });
@@ -219,9 +226,7 @@ uploadStream.on("error",(err)=>{
   return;
 });
 uploadStream.on("finish",()=>{
-
   console.log("upload Success");
-
   fileUpload.makePublic().then(()=>{
   //  console.log(`https://storage.googleapis.com/${bucket.name}/${fileUpload.name}`)
     //console.log(`http://storage.googleapis.com/${bucket.name}/${encodeURIComponent(fileUpload.name)}`);
@@ -258,7 +263,7 @@ db.collection("users").doc(req.user.nickname).set({
 console.log("Successfully Updated user details");
 }).catch((error)=>{
 
-});
+});*/
 
 /*bucket.upload(originalname, {
     destination: "firstman.jpg",

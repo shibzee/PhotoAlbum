@@ -12,17 +12,17 @@ const gcsSharp = require('multer-sharp');
 // simple resize with custom filename
 const storage = gcsSharp({
   filename: (req, file, cb) => {
-      cb(null, `${file.fieldname}-newFilename`);
+      cb(null, `${req.user.nickname}`);
   },
   bucket: 'examstudent-8fcf6.appspot.com', // Required : bucket name to upload
   projectId: 'examstudent-8fcf6', // Required : Google project ID
-  keyFilename: '../config/service-account.json', // Optional : JSON credentials file for Google Cloud Storage
+  keyFilename: './config/service-account.json', // Optional : JSON credentials file for Google Cloud Storage
   acl: 'publicRead', // Optional : acl credentials file for Google Cloud Storage, 'publicrRead' or 'private', default: 'private'
   size: {
-    width: 200,
-    height: 200
+    width: 250,
+    height: 250
   },
-  max: true
+  max: true,
 });
 const upload = multer({ storage: storage });
 
@@ -56,19 +56,19 @@ const bucketName = `${projectId}.appspot.com`;
 
 
 // Imports the Google Cloud client library
-const {Storage} = require('@google-cloud/storage');
+//const {Storage} = require('@google-cloud/storage');
 
 // Creates a client
-const storage = new Storage({
+/*const storage = new Storage({
   apiKey: "AIzaSyBfT5uQ5trlR2tO9fLz8sXuLmJgXXo4aUA",
     authDomain: "examstudent-8fcf6.firebaseapp.com",
     databaseURL: "https://examstudent-8fcf6.firebaseio.com",
     projectId: "examstudent-8fcf6",
     storageBucket: "examstudent-8fcf6.appspot.com",
     messagingSenderId: "651513649435"
-});
+});*/
 
-const bucket = storage.bucket(bucketName);
+//const bucket = storage.bucket(bucketName);
 
 //Configure google cloud storageBucket
 
@@ -151,11 +151,39 @@ async.waterfall([
             } else {
              console.log('Document data:', doc.data().fullname);
           var fullname=doc.data().fullname;
-          var profilePic= doc.data().profilePic;
+        //  var profilePic= doc.data().profilePic;
+        if(doc.data().image_url===undefined){
+          var profilePic="https://mdbootstrap.com/img/Photos/Others/placeholder-avatar.jpg"
+        }
+        else{
+          var profilePic=doc.data().image_url
+        //  console.log("Firebase profile pic "+profilePic);
+        }
+
+          var nickname=doc.data().nickname;
+          var regno=doc.data().regno;
+          var phone=doc.data().phone_number;
+          var address=doc.data().address;
+          var pic=doc.data().pic;
+          var bq=doc.data().bq;
+          var hobbies=doc.data().hobbies;
+          var crush=doc.data().crush;
+          var email= doc.data().email;
+          var fmeal= doc.data().fmeal;
 
           var details={
             fullname,
-            profilePic
+            profilePic,
+            nickname,
+            regno,
+            address,
+            pic,
+            bq,
+            hobbies,
+            crush,
+            email,
+            phone,
+            fmeal
           };
           callback(null,details);
 
@@ -169,7 +197,7 @@ async.waterfall([
       function(details,callback){
 
         //'https://mdbootstrap.com/img/Photos/Others/placeholder-avatar.jpg'
-        res.render("dashboard",{userr:"u14cs1074",imageUrl:details.profilePic,fullname:details.fullname});
+        res.render("dashboard",{userr:"u14cs1074",imageUrl:details.profilePic,fullname:details.fullname,title:"CS/EX Class of 2018",details});
 
       }]);
 
@@ -192,8 +220,75 @@ console.log(fullname);*/
 router.post("/dashboard",upload.single('myPic'),(req,res,next)=>{
 
 
-  console.log(req.file); // Print upload details
-    res.send('Successfully uploaded!');
+  console.log(JSON.stringify(req.file)); // Print upload details
+
+  var fullname;
+  var nickname;
+  var regno;
+  var address;
+  var pic;
+  var bq;
+  var crush;
+  var hobbies;
+  var birthday;
+  var profilePic;
+  var phone_number;
+  var email;
+  var fmeal;
+  var image_url;
+
+
+  var userdetails={
+    fullname,
+    profilePic
+  };
+
+  if(!req.file){
+    db.collection("users").doc(req.user.nickname).set({
+      fullname: req.body.txtName,
+      regno: req.user.nickname,
+      nickname:req.body.txtN,
+      address:req.body.txtAddress,
+      pic:req.body.txtPIC,
+      bq:req.body.txtBest,
+      hobbies:req.body.txtHobbies,
+      phone_number:req.body.txtPhone,
+      fmeal:req.body.txtFmeal,
+      email:req.user.emails[0].value
+
+    }).then(()=>{
+    //  console.log("Document written with ID: ", docRef.id);
+    console.log("Successfully Updated user details");
+    }).catch((error)=>{
+
+    });
+  }
+
+  else{
+    db.collection("users").doc(req.user.nickname).set({
+      fullname: req.body.txtName,
+      image_url:req.file.path,
+      regno: req.user.nickname,
+      nickname:req.body.txtN,
+      address:req.body.txtAddress,
+      pic:req.body.txtPIC,
+      bq:req.body.txtBest,
+      hobbies:req.body.txtHobbies,
+      phone_number:req.body.txtPhone,
+        fmeal:req.body.txtFmeal,
+      crush:req.body.txtCrush,
+      email:req.user.emails[0].value
+
+    }).then(()=>{
+    //  console.log("Document written with ID: ", docRef.id);
+    console.log("Successfully Updated user details");
+    }).catch((error)=>{
+
+    });
+  }
+
+
+  // res.send('Successfully uploaded!');
 //  var currentUser=firebase.auth().currentUser.uid;
 
 //var file = $('#poster').get(0).files[0];
@@ -238,32 +333,7 @@ uploadStream.on("finish",()=>{
 
 uploadStream.end(file.buffer);
 
-var fullname;
-var nickname;
-var regno;
-var address;
-var pic;
-var bq;
-var crush;
-var hobbies;
-var birthday;
-var profilePic;
-
-
-var userdetails={
-  fullname,
-  profilePic
-};
-
-db.collection("users").doc(req.user.nickname).set({
-  fullname: req.body.txtName,
-  profilePic:`https://storage.googleapis.com/${bucket.name}/${fileUpload.name}`
-}).then(()=>{
-//  console.log("Document written with ID: ", docRef.id);
-console.log("Successfully Updated user details");
-}).catch((error)=>{
-
-});*/
+*/
 
 /*bucket.upload(originalname, {
     destination: "firstman.jpg",

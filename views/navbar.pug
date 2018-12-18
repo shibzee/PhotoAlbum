@@ -27,13 +27,17 @@
 script(type='text/javascript').
   var lock = new Auth0Lock('-Nu7paWTNLNxPwn-kjP2jC9aX-PlUK37', 'photoalbum.auth0.com',{
   auth: {
-  redirectUrl: 'http://localhost:5000/callback'
+  redirectUrl: 'https://sleepy-meadow-27118.herokuapp.com/callback'
   , responseType: 'code'
   , params: {
   scope: 'openid email profile'
   }
   },
-  allowedConnections: ['Username-Password-Authentication']
+  allowedConnections: ['Username-Password-Authentication'],
+  languageDictionary: {"title":"Photo Album", emailInputPlaceholder: "Please enter your email", usernameInputPlaceholder:"u14cs1000 "},
+  usernameStyle: 'username',
+  language: "en",
+  theme: {primaryColor:"#3A99D8"}
   });
   function login() {
   lock.show();

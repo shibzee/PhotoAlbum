@@ -3,7 +3,7 @@ extends lay
 block content
   .container.contact-form
     .contact-image
-      img(src='https://image.ibb.co/kUagtU/rocket_contact.png', alt='rocket_contact')
+      img(src='https://pngimage.net/wp-content/uploads/2018/06/user-png-images-4.png', alt='rocket_contact')
         
     form(method='post', href="/dashboard", enctype="multipart/form-data")
         .row
@@ -11,36 +11,36 @@ block content
             h3 My Profile
           .col-md-6
             .form-group
-              input.form-control(name='txtName', placeholder='Full Name *', value=fullname, type='text')
+              input.form-control(name='txtName', placeholder='Full Name *', value=details.fullname, type='text')
             .form-group
-              input.form-control(name='txtEmail', placeholder='Nickname *', value='', type='text')
+              input.form-control(name='txtN', placeholder='Nickname *', value=details.nickname, type='text')
             .form-group
-              input.form-control(name='txtRegno', placeholder='Registration Number *', value='', type='text')
+              input.form-control(name='txtRegno', placeholder='Registration Number *', value=user.nickname, type='text',readonly="readonly")
             .form-group
-              input.form-control(name='txtPhone', placeholder='Phone Number *', value=user.nickname, type='text',readonly="readonly")
+              input.form-control(name='txtPhone', placeholder='Phone Number *', value=details.phone, type='text')
             .form-group
               input.form-control(name='txtEmail', placeholder='Email Address *', value=user.emails[0].value, type='text',readonly="readonly") 
             .form-group
-              input.form-control(name='txtAddress', placeholder='Address *', value="", type='text')
+              input.form-control(name='txtAddress', placeholder='Address *', value=details.address, type='text')
             .form-group
-              input.form-control(name='txtPIC', placeholder='Patner In Crime *', value="", type='text')
+              input.form-control(name='txtPIC', placeholder='Patner In Crime *', value=details.pic, type='text')
             .form-group
-              input.form-control(name='txtBestQ', placeholder='Best Quote *', value="", type='text')
+              input.form-control(name='txtBest', placeholder='Best Quote *', value=details.bq, type='text')
             .form-group
-              input.form-control(name='txtCrush', placeholder='Crush *', value="", type='text')
+              input.form-control(name='txtFmeal', placeholder='Favorite Meal *', value=details.fmeal, type='text')
             .form-group
-              input.form-control(name='txtHobbies', placeholder='Hobbies *', value="", type='text') 
+              input.form-control(name='txtHobbies', placeholder='Hobbies *', value=details.hobbies, type='text') 
             .form-group
               input.form-control(name='txtBirthday', placeholder='Birthday *', value="", type='text')
           .col-md-5.col-lg-5.col-xl-5.d-flex.justify-content-center(style='margin-left:60px')
             .form-group
               .file-field
                 .mb-4
-                  img.rounded-circle.z-depth-1-half.avatar-pic(src=imageUrl, alt='example placeholder avatar')
+                  img.rounded-circle.z-depth-1-half.avatar-pic(src=imageUrl, alt='No Image Uploaded')
                 .d-flex.justify-content-center
                   .btn.btn-mdb-color.btn-rounded.float-left
                     span Add photo
-                    input(type='file',name="myPic",id="myPic")        
+                    input(type='file',name="myPic",accept="image/jpeg")        
               
           .col-md-12(style="margin-top:40px")        
             .form-group

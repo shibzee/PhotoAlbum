@@ -167,7 +167,7 @@ async.waterfall([
           var pic=doc.data().pic;
           var bq=doc.data().bq;
           var hobbies=doc.data().hobbies;
-          var crush=doc.data().crush;
+    //      var crush=doc.data().crush;
           var email= doc.data().email;
           var fmeal= doc.data().fmeal;
 
@@ -180,7 +180,6 @@ async.waterfall([
             pic,
             bq,
             hobbies,
-            crush,
             email,
             phone,
             fmeal

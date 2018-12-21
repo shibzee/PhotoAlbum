@@ -275,7 +275,6 @@ router.post("/dashboard",upload.single('myPic'),(req,res,next)=>{
       hobbies:req.body.txtHobbies,
       phone_number:req.body.txtPhone,
         fmeal:req.body.txtFmeal,
-      crush:req.body.txtCrush,
       email:req.user.emails[0].value
 
     }).then(()=>{

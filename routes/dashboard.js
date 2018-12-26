@@ -6,6 +6,7 @@ const async= require('async');
 const path= require("path");
 const multer= require("multer");
 const gcsSharp = require('multer-sharp');
+const moment= require("moment");
 
 
 //am trying to test multer sharp
@@ -144,7 +145,8 @@ async.waterfall([
               console.log('No such document!');
 
               var details={
-                profilePic:'https://mdbootstrap.com/img/Photos/Others/placeholder-avatar.jpg'
+                  profilePic:'https://mdbootstrap.com/img/Photos/Others/placeholder-avatar.jpg',
+                  birthday:"Select Birthday"
               };
               callback(null,details);
       //    callback(null,"");
@@ -160,6 +162,17 @@ async.waterfall([
         //  console.log("Firebase profile pic "+profilePic);
         }
 
+          if(doc.data().birthday===undefined){
+            var birthday="Select birthday";
+          }
+          else{
+            var year= doc.data().birthday;
+            var birthday = moment.unix(year.seconds).format("LL");
+
+          }
+
+        //  var dateTimeString = moment.unix(birthday.seconds).format("Y-M-D");
+        // console.log(dateTimeString);
           var nickname=doc.data().nickname;
           var regno=doc.data().regno;
           var phone=doc.data().phone_number;
@@ -182,7 +195,8 @@ async.waterfall([
             hobbies,
             email,
             phone,
-            fmeal
+            fmeal,
+            birthday
           };
           callback(null,details);
 
@@ -235,6 +249,7 @@ router.post("/dashboard",upload.single('myPic'),(req,res,next)=>{
   var email;
   var fmeal;
   var image_url;
+  var birthday;
 
 
   var userdetails={
@@ -242,47 +257,95 @@ router.post("/dashboard",upload.single('myPic'),(req,res,next)=>{
     profilePic
   };
 
+
   if(!req.file){
-    db.collection("users").doc(req.user.nickname).set({
-      fullname: req.body.txtName,
-      regno: req.user.nickname,
-      nickname:req.body.txtN,
-      address:req.body.txtAddress,
-      pic:req.body.txtPIC,
-      bq:req.body.txtBest,
-      hobbies:req.body.txtHobbies,
-      phone_number:req.body.txtPhone,
-      fmeal:req.body.txtFmeal,
-      email:req.user.emails[0].value
+    if(!req.body.txtBirthday){
+      db.collection("users").doc(req.user.nickname).set({
+        fullname: req.body.txtName,
+        regno: req.user.nickname,
+        nickname:req.body.txtN,
+        address:req.body.txtAddress,
+        pic:req.body.txtPIC,
+        bq:req.body.txtBest,
+        hobbies:req.body.txtHobbies,
+        phone_number:req.body.txtPhone,
+        fmeal:req.body.txtFmeal,
+        email:req.user.emails[0].value
 
-    }).then(()=>{
-    //  console.log("Document written with ID: ", docRef.id);
-    console.log("Successfully Updated user details");
-    }).catch((error)=>{
+      }).then(()=>{
+      //  console.log("Document written with ID: ", docRef.id);
+      console.log("Successfully Updated user details");
+      }).catch((error)=>{
 
-    });
+      });
+    }
+    else{
+      db.collection("users").doc(req.user.nickname).set({
+        fullname: req.body.txtName,
+        regno: req.user.nickname,
+        nickname:req.body.txtN,
+        address:req.body.txtAddress,
+        pic:req.body.txtPIC,
+        bq:req.body.txtBest,
+        hobbies:req.body.txtHobbies,
+        phone_number:req.body.txtPhone,
+        fmeal:req.body.txtFmeal,
+        email:req.user.emails[0].value,
+        birthday:new Date(req.body.txtBirthday)
+
+      }).then(()=>{
+      //  console.log("Document written with ID: ", docRef.id);
+      console.log("Successfully Updated user details");
+      }).catch((error)=>{
+
+      });
+    }
+
   }
 
   else{
-    db.collection("users").doc(req.user.nickname).set({
-      fullname: req.body.txtName,
-      image_url:req.file.path,
-      regno: req.user.nickname,
-      nickname:req.body.txtN,
-      address:req.body.txtAddress,
-      pic:req.body.txtPIC,
-      bq:req.body.txtBest,
-      hobbies:req.body.txtHobbies,
-      phone_number:req.body.txtPhone,
-        fmeal:req.body.txtFmeal,
-      email:req.user.emails[0].value
+    if(!req.body.txtBirthday){
+      db.collection("users").doc(req.user.nickname).set({
+        fullname: req.body.txtName,
+        image_url:req.file.path,
+        regno: req.user.nickname,
+        nickname:req.body.txtN,
+        address:req.body.txtAddress,
+        pic:req.body.txtPIC,
+        bq:req.body.txtBest,
+        hobbies:req.body.txtHobbies,
+        phone_number:req.body.txtPhone,
+          fmeal:req.body.txtFmeal,
+        email:req.user.emails[0].value
+      }).then(()=>{
+      //  console.log("Document written with ID: ", docRef.id);
+      console.log("Successfully Updated user details");
+      }).catch((error)=>{
 
-    }).then(()=>{
-    //  console.log("Document written with ID: ", docRef.id);
-    console.log("Successfully Updated user details");
-    }).catch((error)=>{
+      });
+    }
+    else{
+      db.collection("users").doc(req.user.nickname).set({
+        fullname: req.body.txtName,
+        image_url:req.file.path,
+        regno: req.user.nickname,
+        nickname:req.body.txtN,
+        address:req.body.txtAddress,
+        pic:req.body.txtPIC,
+        bq:req.body.txtBest,
+        hobbies:req.body.txtHobbies,
+        phone_number:req.body.txtPhone,
+          fmeal:req.body.txtFmeal,
+        email:req.user.emails[0].value,
+        birthday:new Date(req.body.txtBirthday)
+      }).then(()=>{
+      //  console.log("Document written with ID: ", docRef.id);
+      console.log("Successfully Updated user details");
+      }).catch((error)=>{
 
-    });
+      });
+    }
+
   }
 
 

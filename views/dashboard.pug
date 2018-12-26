@@ -31,8 +31,8 @@ block content
             .form-group
               input.form-control(name='txtHobbies', placeholder='Hobbies *', value=details.hobbies, type='text') 
             .form-group
-              input.form-control(name='txtBirthday', placeholder='Birthday *', value="", type='text')
-          .col-md-5.col-lg-5.col-xl-5.d-flex.justify-content-center(style='margin-left:60px')
+              input#my.flatpickr(name='txtBirthday', type='text', placeholder=details.birthday)
+          .col-md-5.col-lg-5.col-xl-5.d-flex.justify-content-center(style='margin-left:0px')
             .form-group
               .file-field
                 .mb-4
@@ -44,5 +44,5 @@ block content
               
           .col-md-12(style="margin-top:40px")        
             .form-group
-              input.btnContact(name='btnSubmit', value='Update Profile', type='submit')        
+              input.btn.btn-success.btn-rounded(name='btnSubmit', value='Update Profile', type='submit')        
           

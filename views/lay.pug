@@ -16,8 +16,20 @@ html
     link(href="/stylesheets/mdb.min.css", rel="stylesheet") 
     link(rel="stylesheet", href="/stylesheets/full-slider.css")    
     link(rel='stylesheet', href='https://www.w3schools.com/w3css/4/w3.css')
+    link(rel='stylesheet', href='https://cdn.jsdelivr.net/npm/flatpickr/dist/flatpickr.min.css')
+    link(rel='stylesheet', type='text/css', href='https://npmcdn.com/flatpickr/dist/themes/material_blue.css')
+    link(rel='stylesheet', href='/style.css')
+    link(rel='stylesheet', href='//fonts.googleapis.com/css?family=Libre%20Franklin:400,700|Roboto+Mono')
+    style.
+      body, input {
+      font-family: 'Libre Franklin', Helvetica, Arial, sans-serif;
+      }
+      pre, code {
+      font-family: 'Roboto Mono', 'Courier New', 'Courier', monospace;
+      }
     link(rel='shortcut icon', href='//cdn2.auth0.com/styleguide/latest/lib/logos/img/favicon.png')
-    script(src='https://cdn.auth0.com/js/lock/11.2/lock.min.js')  
+    script(src='https://cdn.auth0.com/js/lock/11.2/lock.min.js')
+      
 
   body
     include ./navbar.pug
@@ -43,4 +55,9 @@ html
       // <script type="text/javascript" src="https://mdbootstrap.com/previews/docs/latest/js/mdb.min.js"></script>
       script(type='text/javascript', src='/javascript/mdb.min.js')
       script(src='https://cdn.auth0.com/js/lock/11.2/lock.min.js')
+      script(src='https://cdn.jsdelivr.net/npm/flatpickr')
+      script.
+        flatpickr("#my", {    altInput: true,
+        altFormat: "F j, Y",
+        dateFormat: "Y-m-d",});
       

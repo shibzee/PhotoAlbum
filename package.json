@@ -18,7 +18,7 @@
     "express-multipart-file-parser": "^0.1.2",
     "express-session": "^1.15.6",
     "firebase": "^5.5.7",
-    "firebase-admin": "^6.1.0",
+    "firebase-admin": "^11.4.1",
     "http-errors": "~1.6.2",
     "moment": "^2.23.0",
     "morgan": "~1.9.0",
